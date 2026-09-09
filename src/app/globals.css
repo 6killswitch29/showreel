@@ -22,5 +22,14 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* 본문 대부분이 한글이다. Geist에는 한글 글리프가 없어 뒤의 시스템 폰트로 넘어간다.
+     Pretendard 도입은 아직 미결(CLAUDE.md) — 정해지면 이 줄만 바꾼다. */
+  font-family: var(--font-geist-sans), "Apple SD Gothic Neo", "Malgun Gothic",
+    system-ui, sans-serif;
+  word-break: keep-all;
+}
+
+/* 고정 네비게이션(h-14 = 3.5rem)이 섹션 머리를 가리지 않게. */
+:target {
+  scroll-margin-top: 5rem;
 }

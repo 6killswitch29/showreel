@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { LenisProvider } from "@/lib/lenis";
+import { MotionProvider } from "@/lib/motion-provider";
+import { resume } from "@/data/resume";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,9 +15,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const { profile } = resume;
+
 export const metadata: Metadata = {
-  title: "김용현 | Portfolio",
-  description: "이력서 · 자기소개서 · 경력기술서 포트폴리오",
+  title: `${profile.name} | ${profile.headline}`,
+  description: profile.summary,
+  openGraph: {
+    title: `${profile.name} | ${profile.headline}`,
+    description: profile.summary,
+    type: "profile",
+    locale: "ko_KR",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -23,7 +34,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="ko"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <MotionProvider>
+          <LenisProvider>{children}</LenisProvider>
+        </MotionProvider>
+      </body>
     </html>
   );
 }
